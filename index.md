@@ -1,12 +1,32 @@
-## Welcome to GitHub Pages
+# [제목제목제목]
 
-You can use the [editor on GitHub](https://github.com/kookmin-sw/cap-template/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+### 프로젝트 소개
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+이런저런내용
 
-### Markdown
+### 팀원 소개
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+ 팀장 
+ 
+ 20163199 김중현 TEL) 010-8355-8893
+ 
+ 팀원 
+ 
+ 20143074 심효창 TEL) 010-3808-1981  E-mail) 94shch@naver.com
+      
+      
+ 20171613 김효종 TEL) 010-2518-6146 E-mail) kim97072481@gmail.com
+      
+      
+ 20183438 조성민 TEL) 010-3478-3315 E-mail) tjdals9709@naver.com
+      
+      
+ 20203151 최신영 TEL) 010-7210-2326 E-mail) siny0626@gmail.com
+      
+      
+ 20203161 한태원 TEL) 010-9347-2444 E-mail) hantawon@naver.com
+ 
+ 
 
 ```markdown
 Syntax highlighted code block
