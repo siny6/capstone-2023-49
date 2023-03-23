@@ -1,77 +1,50 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10530624&assignment_repo_type=AssignmentRepo)
-# Welcome to GitHub
-
-캡스톤 팀 생성을 축하합니다.
-
-## 팀소개 및 페이지를 꾸며주세요.
-
-- 프로젝트 소개
-  - 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등을 readme.md에 작성.
-  - Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가.
-
-- 팀페이지 꾸미기
-  - 프로젝트 소개 및 팀원 소개
-  - index.md 예시보고 수정.
-
-- GitHub Pages 리파지토리 Settings > Options > GitHub Pages 
-  - Source를 marster branch
-  - Theme Chooser에서 태마선택
-  - 수정후 팀페이지 확인하여 점검.
-
-**팀페이지 주소** -> https://kookmin-sw.github.io/ '{{자신의 리파지토리 아이디}}'
-
-**예시)** 2023년 0조  https://kookmin-sw.github.io/capstone-2023-00/
+# 미정
+-----
 
 
-## 내용에 아래와 같은 내용들을 추가하세요.
+## 1. 프로젝트 소개
+ 
+ 제한 시간 동안 사방으로 몰려오는 적으로 부터 생존하는 '뱀서라이크' 게임입니다. 적을 처치하고 레벨업을 하면서 무기를 강화하면서 스테이지를 돌파해 나가야 합니다.
+ 
 
-### 1. 프로잭트 소개
-
-프로젝트
-
-### 2. 소개 영상
-
-프로젝트 소개하는 영상을 추가하세요
-
-### 3. 팀 소개
-
-팀을 소개하세요.
-
-팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
-
-### 4. 사용법
-
-소스코드제출시 설치법이나 사용법을 작성하세요.
-
-### 5. 기타
-
-추가적인 내용은 자유롭게 작성하세요.
+ 
+#### 제작 플래폼/언어
+ 
+ 
+UNITY 게임엔진/C# <br><br><br><br>
 
 
-## Markdown을 사용하여 내용꾸미기
+#### preview
 
-Markdown은 작문을 스타일링하기위한 가볍고 사용하기 쉬운 구문입니다. 여기에는 다음을위한 규칙이 포함됩니다.
 
-```markdown
-Syntax highlighted code block
+추후수정
+ 
+ 
+ 
+----
+## 2. 팀원 소개
 
-# Header 1
-## Header 2
-### Header 3
+ 
+ 팀장 20163199 김중현                               | 20143074 심효창                                   |  20171613 김효종 | 
+ ----| ----| ----| 
+ <img src="./profile.jpg"  width="100" height="100"/> |<img src="./profile.jpg"  width="100" height="100"/> |<img src="./profile.jpg"  width="100" height="100"/> |
+ Tel. 010-8355-8893 <br> E-mail. gotka0211@gmail.com|Tel. 010-3808-1981 <br> E-mail. 94shch@naver.com   |Tel. 010-2518-6146 <br> E-mail. kim97072481@gmail.com|
+ 
 
-- Bulleted
-- List
+ 20183438 조성민                                     | 20203151 최신영                                   |  20203161 한태원 | 
+ ----|----|  ----|
+ <img src="./profile.jpg"  width="100" height="100"/>  |<img src="./profile.jpg"  width="100" height="100"/> | <img src="./profile.jpg"  width="100" height="100"/> |
+ Tel. 010-3478-3315 <br> E-mail. tjdals9709@naver.com| Tel. 010-7210-2326 <br> E-mail. siny0626@gmail.com| Tel. 010-9347-2444 <br> E-mail. hantawon@naver.com|
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+----
+## 3. 플레이 영상
 
-자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+추후 업데이트
 
-### Support or Contact
+----
+## 4. 설치 방법
 
-readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
+추후 업데이트
+
