@@ -24,7 +24,7 @@
  20183438 조성민                                     | 20203151 최신영                                   |  20203161 한태원 | 
  ----|----|  ----|
  <img src="./profile.jpg"  width="100" height="100"/>  |<img src="./profile.jpg"  width="100" height="100"/> | <img src="./profile.jpg"  width="100" height="100"/> |
- Tel. 010-3478-3315 <br> E-mail. tjdals9709@naver.com| Tel. 010-7210-2326 <br> E-mail. siny0626@gmail.com| Tel. 010-9347-2444 <br> E-mail. hantawon@naver.com|<br><br><br><br>
+ Tel. 010-3478-3315 <br> E-mail. tjdals9709@naver.com| Tel. 010-7210-2326 <br> E-mail. siny0626@gmail.com| Tel. 010-9347-2444 <br> E-mail. hantawon@naver.com|
 
 
 
