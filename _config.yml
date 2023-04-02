@@ -1,5 +1,5 @@
 remote_theme: jekyll-theme-hacker
-plugins:
-- jekyll-remote-theme 
 title: Absorber
 description: capstone team 49
+show_downloads: true
+google_analytics:
