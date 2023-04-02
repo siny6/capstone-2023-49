@@ -1,28 +1,46 @@
-# 미정
+
+# Absorber
 -----
 
 
-## 1. 프로젝트 소개
- 
- 제한 시간 동안 사방으로 몰려오는 적으로 부터 생존하는 '뱀서라이크' 게임입니다. 적을 처치하고 레벨업을 하면서 무기를 강화하면서 스테이지를 돌파해 나가야 합니다.
- 
+## 프로젝트 소개
 
- 
-#### 제작 플래폼/언어
- 
-UNITY 게임엔진/C# <br><br><br><br>
+ - 제목 : Absorber
+ - 장르 : 뱀서라이크(무한히 다가오는 적들을 물리치는 류)
+ - 특징 : 높은 랜덤성, 스토리
+ - 사용하는 언어 : C#(Unitiy)
+
+  Abrober는 무한히 다가오는 몬스터들에 맞서 싸워 탑의 정상을 향해가는 뱀서라이크류 게임입니다. 기존 뱀서라이크 류 게임에 없던 스토리와 높은 랜덤성을 부여해 일회성 플레이와 다회성 플레이에 의미를 부여합니다. 
 
 
-#### preview
+## Abstract
 
-추후수정
+-   Title: Absorber
+-   Genre:  Games Like Vampire Survivors(a type of game where the player defeats endlessly approaching enemies)
+-   Features: High randomness, story
+-   Language used: C# (Unity)
+
+Absorber is a Games Like Vampire Survivors where the player fights against endless waves of monsters to reach the top of a tower. It features a unique story and high randomness that give meaning to both one-time and repeated plays. 
  
- 
- 
- 
- 
+ ## 스토리
+
+기억을 잃고 일어난 
+
+
+
 ----
-## 2. 팀원 소개
+## 플레이 이미지, 영상
+
+추후 업데이트
+
+----
+## 설치 방법
+
+추후 업데이트
+
+
+
+## 팀원 소개
 
  
  팀장 20163199 김중현                               | 20143074 심효창                                   |  20171613 김효종 | 
@@ -35,16 +53,3 @@ UNITY 게임엔진/C# <br><br><br><br>
  ----|----|  ----|
  <img src="./profile.jpg"  width="100" height="100"/>  |<img src="./profile.jpg"  width="100" height="100"/> | <img src="./profile.jpg"  width="100" height="100"/> |
  Tel. 010-3478-3315 <br> E-mail. tjdals9709@naver.com| Tel. 010-7210-2326 <br> E-mail. siny0626@gmail.com| Tel. 010-9347-2444 <br> E-mail. hantawon@naver.com|
-
-
-
-----
-## 3. 플레이 영상
-
-추후 업데이트
-
-----
-## 4. 설치 방법
-
-추후 업데이트
-
