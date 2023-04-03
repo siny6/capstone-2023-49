@@ -33,7 +33,8 @@ public class Boss : MonoBehaviour
         }
     }
 
-    IEnumerator Die()   // 보스 체력 0 이하로 내려갈 시 3초 뒤 보스 오브젝트 파괴
+    // 보스 체력 0 이하로 내려갈 시 3초 뒤 보스 오브젝트 파괴
+    IEnumerator Die()   
     {
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
@@ -41,7 +42,8 @@ public class Boss : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D collision)  // 보스 피격 시 플레이어 HP 감소
+    // 보스 피격 시 플레이어 HP 감소
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         { 
