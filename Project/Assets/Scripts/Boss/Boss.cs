@@ -6,12 +6,10 @@ public class Boss : MonoBehaviour
 {
     public Boss_Kill uiBoss_Kill;
     public Rigidbody2D rigid;
-    public Transform target;                     // 플레이어 위치
-    public float speed;                   // 보스 속도
+    public Transform target;                  // 플레이어 위치
+    public float speed;                       // 보스 속도
     public float bossHp = 100f;               // 보스 체력
     public bool bossDied;
-
-    // Start is called before the first frame update
 
     public void Awake()
     {
@@ -43,15 +41,13 @@ public class Boss : MonoBehaviour
     }
 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)  // 보스 피격 시 플레이어 HP 감소
     {
         if (collision.gameObject.CompareTag("Player"))
         { 
             float dmg = 3;
-            EntityEffectController.eec.CreateDamageText(GameManager.gm.player, dmg);
-            
+            EntityEffectController.eec.CreateDamageText(GameManager.gm.player, dmg);            
             GameManager.gm.player.GetComponent<Player>().Hp -= (int)dmg;
-            //rigid.isKinematic = true;
         }
     }
 }
