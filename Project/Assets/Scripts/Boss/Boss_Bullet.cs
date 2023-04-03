@@ -12,7 +12,7 @@ public class Boss_Bullet : MonoBehaviour
     public float bunbSpeed = 2f;
     public float norSpeed = 5f;
     public float bombSpeed = 1.5f;
-    // Start is called before the first frame update
+
     void Start()
     {
         target = GameObject.Find("Player").GetComponent<Transform>();
@@ -21,15 +21,17 @@ public class Boss_Bullet : MonoBehaviour
         Invoke("Firebomb", 10f);
     }
 
-    void Firenormal()
+    // 기본 공격
+    void Firenormal() 
     {
         GameObject normalBullet = Instantiate(normalPrefab, transform.position, Quaternion.identity);
         Rigidbody2D normalRigid = normalBullet.GetComponent<Rigidbody2D>();
-        Vector2 direction = target.position - transform.position;               // �÷��̾� ����
-        normalRigid.velocity = direction.normalized * norSpeed;                 // ���� ����ȭ�ؼ� �߻�
+        Vector2 direction = target.position - transform.position;               
+        normalRigid.velocity = direction.normalized * norSpeed;                 
         Invoke("Firenormal", 0.5f);
     }
 
+    // 분열 공격
     void Firebunb()
     {
         GameObject bunbBullet = Instantiate(bunbPrefab, transform.position, Quaternion.identity);
@@ -39,6 +41,7 @@ public class Boss_Bullet : MonoBehaviour
         Invoke("Firebunb", 5f);
     }
 
+    // 폭발 공격
     void Firebomb()
     {
         for (int i = 0; i < 18; i++)
