@@ -18,7 +18,8 @@ public class BossBomb : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    void OnTriggerEnter2D(Collider2D other)  // 플레이어와 충돌시 데미지 입힘, 데미지 띄우기
+    // 플레이어와 충돌 시 플레이어 Hp 
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
