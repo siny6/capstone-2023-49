@@ -10,15 +10,17 @@ public class BossMove : Boss
         StartCoroutine(MoveDown());
     }
 
-    void FixedUpdate()  // ÇÃ·¹ÀÌ¾î ÂÊÀ¸·Î ÀÌµ¿
+    // í”Œë ˆì´ì–´ ìª½ìœ¼ë¡œ ì´ë™
+    void FixedUpdate() 
     {
         if (move)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         }
     }
-
-    IEnumerator MoveDown()    // º¸½º µîÀå Àå¸é
+    
+    // ë³´ìŠ¤ ë“±ì¥ ì¥ë©´
+    IEnumerator MoveDown() 
     {
         rigid.velocity = new Vector2(0, -5);
         yield return new WaitForSeconds(3f);
