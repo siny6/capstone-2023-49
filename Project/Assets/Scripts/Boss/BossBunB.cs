@@ -6,30 +6,27 @@ public class BossBunB : MonoBehaviour
 {
     public GameObject splitBulletPrefab;
     public float speed = 2f;
-    // Start is called before the first frame update
     void Start()
     {
-        Invoke("SplitBullet", 2f);      // 2���� SplitBullet �Լ� �۵�
-        Destroy(gameObject, 5f);        // 5���� ������Ʈ �ı�
+        Invoke("SplitBullet", 2f);      // 2초 후 SplitBullet 함수 실행
+        Destroy(gameObject, 5f);        
     }
 
-    void SplitBullet()
+    void SplitBullet()  // 18방향으로 분열되어 날아가는 총알 생성
     {
         for (int i = 0; i < 18; i++)
         {
-            GameObject splitBullet = Instantiate(splitBulletPrefab, transform.position, Quaternion.identity);   // ������ �ν��Ͻ� ����
+            GameObject splitBullet = Instantiate(splitBulletPrefab, transform.position, Quaternion.identity); 
             Rigidbody2D splitRigid = splitBullet.GetComponent<Rigidbody2D>();                                   
-            splitRigid.velocity = Quaternion.AngleAxis(20f * i, Vector3.forward) * transform.right * speed;     // 20���� ������ �и��ϰ� �߻�
+            splitRigid.velocity = Quaternion.AngleAxis(20f * i, Vector3.forward) * transform.right * speed;  
         }
         Invoke("SplitBullet", 2f);  
-        //Destroy(gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)  // 플레이어와 충돌 시 플레이어 Hp감소
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //GameObject.Find("Player").GetComponent<Player>().Hp -= 1;
             float dmg = 1;
             EntityEffectController.eec.CreateDamageText(GameManager.gm.player, dmg);
             other.gameObject.GetComponent<Player>().Hp -= (int)dmg;
