@@ -12,7 +12,8 @@ public class BossBunB : MonoBehaviour
         Destroy(gameObject, 5f);        
     }
 
-    void SplitBullet()  // 18방향으로 분열되어 날아가는 총알 생성
+    // 18방향으로 분열되어 날아가는 총알 생성
+    void SplitBullet() 
     {
         for (int i = 0; i < 18; i++)
         {
@@ -23,7 +24,8 @@ public class BossBunB : MonoBehaviour
         Invoke("SplitBullet", 2f);  
     }
 
-    void OnTriggerEnter2D(Collider2D other)  // 플레이어와 충돌 시 플레이어 Hp감소
+    // 플레이어와 충돌 시 플레이어 Hp감소
+    void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.gameObject.CompareTag("Player"))
         {
