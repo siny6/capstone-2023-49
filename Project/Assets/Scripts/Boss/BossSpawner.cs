@@ -6,21 +6,20 @@ public class BossSpawner : MonoBehaviour
 {
     public GameObject[] bosses;
     public GameObject boss1, boss2, boss3, boss4, boss5, boss6, boss7;
-    //float spawnTime = GameManager.gm.gameTime;
     public float spawnDelay = 5f;
     public int check = 0;
 
     // 현재 보스
-    GameObject currBoss; // *****************************************************
+    GameObject currBoss;
 
 
-    void Start()  // bosses �迭���� boss 7���� �ְ� �ڷ�ƾ ����
+    void Start()  
     {
         bosses = new GameObject[] { boss1, boss2, boss3, boss4, boss5, boss6, boss7};
         // StartCoroutine(BossSpawn());         // 테스트 환경에서는 원할때 보스생성될 수 있도록 잠깐 주석처리
     }
 
-    IEnumerator BossSpawn()  // bosses �迭���� ���� 1�� �̰� ���� �ð� �ڿ� �ν��Ͻ� ����
+    IEnumerator BossSpawn()  
     {
         int bossIndex = Random.Range(0, bosses.Length);
         yield return new WaitForSeconds(spawnDelay);
@@ -28,13 +27,7 @@ public class BossSpawner : MonoBehaviour
     }
 
 
-
-
-
-
-
-
-    // 보스 바로 생성 - 테스트 환경을 위함.                 // *****************************************************
+    // 보스 바로 생성 - 테스트 환경을 위함.                 
     public void SpawnBoss()              
     {
         int bossIndex = Random.Range(0, bosses.Length);
