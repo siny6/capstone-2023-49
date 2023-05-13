@@ -6,15 +6,24 @@ public abstract class Enemy : MonoBehaviour
 {
     protected float speed; // �̵��ӵ�
     
-    [SerializeField] // ************************************************************** �̰��ϸ� private�̳� protected�� �ν����� â���� �� �� ����
-    protected float hp; // ü��
+    public float hp; // ü��
 
-    protected float damage; // ���ݷ�
+    public float hpFull;     // ****************
+
+    protected int damage; // ���ݷ�
+
+    public bool strongAttack = false;
 
     public float attackSpeed;   // ���ݼӵ�(�ʴ� ���ݼӵ�)
 
     protected bool state = true; // ���� ���� true : �⺻����, false : �����̻�
     public float lastAttackTime;
+
+    public bool canKnockBack = true;
+    public float knockBack_time = 0.2f;
+
+    public bool canMove = true;
+    public bool canAttack_ = true;      // can damage player 
     public bool canAttack       // ���� ���� ����
     {
         get
@@ -25,67 +34,355 @@ public abstract class Enemy : MonoBehaviour
             }            
             // ���� ���� �� �����̻�(cc�� ) �Ǻ�
             float attackDelay = 1 / attackSpeed;
-            if (lastAttackTime + attackDelay <= GameManager.gm.gameTime)
+            if (lastAttackTime + attackDelay <= GameManager.gm.totalGameTime)
             {
                 return true;
             }
             return false;
         }
     }
-    public GameObject[] item; // ü���� ���� �� ����ϴ� ������ ����Ʈ
+
+    // Item
+    public float itemProb;  // probability of drop other items (not mana)
+    public float manaValue; // mana acquisition amount
+
+
 
     protected Rigidbody2D rb;
+    public Transform myTransform;
+    public Transform center;
 
     public GameObject target; // ���� ���
+    public Vector3 target_proj;
 
+    public string id_enemy;
+
+    //==========
+    //애니메이션 관련                   //  *******************************************************************************
+    protected Animator animator;
+
+    public bool isDead = false;
+
+    public Vector3 originScale;
+
+    // dot damage Q
+    public bool onBleeding;
+    public Queue<float> dotQ = new Queue<float>();
+    // public int currDotNum;
     //=====================================================================================
 
-    // Status �ʱ�ȭ
-    public abstract void InitEnemyStatus();
+    // 초기화작업 (공통)                         
+    public void InitEnemyStatus()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.simulated = true;
+        animator = GetComponent<Animator>();
+        
 
-    // ����
-    protected abstract void AttackCustom();
+        target = Player.Instance.gameObject; // ���� ��� = �÷��̾�
+
+        hp = hpFull;
+
+        myTransform.localScale = originScale;
+        myTransform.rotation = Quaternion.identity;
+
+
+        InitEnemyStatusCustom();                    // 개별 능력치 먼저 초기화
+
+
+        StartCoroutine(BattleFlow());
+    }
+
+    // 개별 능력치 초기화
+    public abstract void InitEnemyStatusCustom();
+
+    public abstract void InitEssentialEnemyInfo();
 
     // ������(exp) ���
     public void DropItem()
     {
-        // for (int i = 0; i < item.Length; i++)
-        //     Instantiate(item[i], transform.position, Quaternion.identity);
-        // Instantiate(item[0], transform.position, Quaternion.identity);   
-        
-        //�ϴ��� ����ġ ����� - ���߿� Ȯ�������� �ڼ�, ȸ�������� ����� ���� ********************************
-        GameObject dropItem = Instantiate(item[0], GameObject.Find("Items").transform);
+        // default : drop mana.
+        DropItem item = ItemPoolManager.ipm.SpawnItem("000", manaValue, transform.position);
 
-        dropItem.transform.position = transform.position;
+        if (Random.Range(0,100) < itemProb)
+        {
+            // drop heal item if you are 'lucky'
+            DropItem luckyItem = ItemPoolManager.ipm.SpawnItem("001", Player.Instance.Hp_item_up, transform.position);
+        }
     }
 
     // ����
-    protected void Death(GameObject obj)                                  //********************************
+    protected void Death()                                  //********************************
+    {             
+        GameManager.gm.KillCount += 1;
+
+        isDead = true;
+        dotQ.Clear();
+
+        DieCustom();
+        DropItem();
+        StopCoroutine( MoveAnimation());
+        rb.simulated = false;
+
+        StartCoroutine( DeathAnimation());
+    }
+
+    // ===============================
+    // Clean Death : not drop item, not increase score 
+    // ================================
+    public void CleanDeath()
     {
-        DieCustom(obj);
-        
-        // obj.SetActive(false);
-        // gameObject.GetComponent<Collider2D>().enabled = true;
-        // hp = 100;
-        // DieCustom();
+        // GameManager.gm.KillCount += 1;
+        isDead = true;
+        dotQ.Clear();
+
+
+        DieCustom();
         // DropItem();
+        StopCoroutine( MoveAnimation());
+        rb.simulated = false;
+
+        StartCoroutine( DeathAnimation());        
     }
 
-    public void Disappear()
+
+
+    // 죽는 애니메이션 (빙글빙글 돌면서 크기가 작아짐)
+    public IEnumerator DeathAnimation()
     {
-        gameObject.SetActive(false);
-        GetComponent<Collider2D>().enabled = true;
+        int tickNum = 10;
+        
+
+        float angle= 36;
+        for (int i=tickNum-1;i>0;i--)
+        {
+            myTransform.localScale = originScale * 0.1f * i;
+            myTransform.rotation = Quaternion.Euler(0,0,angle);
+
+            angle+=36;
+            yield return new WaitForSeconds(0.05f);
+        }
+        EnemyPoolManager.epm.TakeToPool(this);
     }
 
-    // ���� ����
+    // 평상시 이동 애니메이션 (두근두근거림)
+    public IEnumerator MoveAnimation()
+    {
+        while(true)
+        {
+            for(int i=0;i<20;i++)
+            {
+                myTransform.localScale += originScale * 0.005f;
+                yield return null;
+            }
+            for(int i=0;i<20;i++)
+            {
+                myTransform.localScale -= originScale * 0.005f;
+                yield return null;
+            }
+        }
+    }
+
+
+    // get dmg for direct attack ( knockback & bleed ) 
+    public void Damaged(int damage, Vector3 hitPoint, float knockbackPower)
+    {
+        hp -= damage;
+
+        //drain
+        int prob = Random.Range(1, 101);
+        if (prob <= Player.Instance.Drain_prob)
+            Player.Instance.ChangeHp(Player.Instance.Drain);
+
+
+        //knockback
+        if (canKnockBack && knockbackPower>0)
+        {
+            StartCoroutine(KnockBack(knockbackPower, hitPoint));
+        }
+        
+
+        //bleed
+        Bleed(4);
+
+
+        // detect death
+        if (hp <= 0)
+        {
+            Death();
+        }
+    }
+
+    // get dmg for indirect attack ( not knockback)
     public void Damaged(float damage)
     {
         hp -= damage;
+
+        //drain
+        int prob = Random.Range(1, 101);
+        if (prob <= Player.Instance.Drain_prob)
+            Player.Instance.ChangeHp(Player.Instance.Drain);
+        
+        // detect death
         if (hp <= 0)
         {
-            Death(gameObject);
+            Death();
         }
     }
+
+
+    // knockBack 
+    public IEnumerator KnockBack(float power, Vector3 pos)
+    {
+        float duration = 0.1f;
+        Stunned(duration);
+
+        Vector3 dir = (center.position - pos).normalized;
+        rb.velocity = dir * power;
+        // rb.AddForce(dir * power );
+
+        yield return new WaitForSeconds(duration);
+        rb.velocity = Vector3.zero;
+        
+
+    }
+    //===================================================
+    // stun : can't move and attack
+    //===================================================
+    public void Stunned(float time)
+    {
+        canMove = false;
+        canAttack_ = false;
+        rb.velocity = Vector3.zero;
+        
+        StartCoroutine( SetDuration_stun(time));
+    }
+
+    //===================================================
+    // release stun
+    //===================================================
+    public IEnumerator SetDuration_stun(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canMove = true;
+        canAttack_ = true;
+    }
+
+
+    //===================================================================================================
+    // dot damage
+    //=========================================
+    public void Bleed(float dpt)
+    {
+        if(isDead)
+        {
+            return;
+        }
+        
+        int num = Random.Range(0, 100);
+        if ( num < Player.Instance.bleedingLevel * 25)
+        {
+            // Debug.Log("출혈");
+            int tickNum = 6;
+            Dot_Init(dpt, tickNum);
+        }
+    }
+
+    //========================================
+    // dot init : set waitQ /  send dot from waitQ to dotQ continuously  (dmg per tick, tickNum)
+    //=======================================
+    public void Dot_Init(float dpt, int tickNum)
+    {
+        Queue<float> waitQ = new Queue<float>();
+        for(int i=0;i<tickNum;i++)
+        {
+            waitQ.Enqueue(dpt);
+        }
+
+        StartCoroutine(Dot_sendQ( waitQ ) );
+    }
+
+    //========================================
+    // send dmg from waitQ to dotQ 
+    //=======================================
+    public IEnumerator Dot_sendQ( Queue<float> waitQ )
+    {
+        while(waitQ.Count>0)
+        {
+            if (isDead)
+            {
+                waitQ.Clear();
+                break;
+            }
+            
+            dotQ.Enqueue( waitQ.Dequeue() );
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+    }
+    //========================================
+    // get dot dmg
+    //=======================================
+    public IEnumerator GetDotDamage()
+    {
+        yield return null;  // delay an frame to wait for every waitQ 
+
+        if (!onBleeding)
+        {
+            onBleeding = true;
+            while(true)
+            {
+                Damaged_dot();
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+    }
+    
+    //=================
+    // get dot dmg
+    //=================
+    public void Damaged_dot()
+    {
+        if (isDead)
+        {
+            return;
+        }
+        
+        if (dotQ.Count==0)
+        {
+            onBleeding = false;
+            return;
+        }
+        // 현재 dotQ에 있는 dmg들을 계산해서 피해입음 
+        float totalTickDmg = 0f;
+        int num = 0;
+        while(dotQ.Count>0)
+        {
+            totalTickDmg += dotQ.Dequeue();
+            num++;
+        }
+        
+        Vector3 hitPoint = center.position;
+        EffectPoolManager.epm.CreateText(hitPoint, totalTickDmg.ToString(), new Color(0.9f,0.5f,0.5f,1));
+        // bleeding effect
+        Effect effect = EffectPoolManager.epm.GetFromPool("102");
+        effect.InitEffect(center.position);
+        effect.ActionEffect();
+        //
+        // EffectPoolManager.epm.CreateText(hitPoint, num.ToString(), Color.red);
+        Damaged(totalTickDmg);
+    }
+
+    //===================================================================================
+
+    public void Healing(float heal)
+    {
+        // 1. 마지막 공격받은 시간에서 일정시간 지나면 스스로 힐
+        // 2. 버프몬스터 근처에 있다가 힐 받음
+        hp += heal;
+    }
+
 
     //=========================================================================================
     //===================================
@@ -93,9 +390,12 @@ public abstract class Enemy : MonoBehaviour
     //===================================
     public IEnumerator BattleFlow()
     {
-        while (true)
+        canAttack_ = true;
+        StartCoroutine( MoveAnimation());
+        StartCoroutine( GetDotDamage() );       // detect bleeding dmg continuously 
+        while (!isDead)     // 죽은 상태가 아닐때 전투플로우 
         {
-            AttackCustom();
+            Attack();
 
             float attackDelay = 1 / attackSpeed;
             yield return new WaitForSeconds(attackDelay);
@@ -110,49 +410,69 @@ public abstract class Enemy : MonoBehaviour
         // ���ݰ����� ��Ȳ�϶� ����
         if (canAttack)
         {
-            lastAttackTime = GameManager.gm.gameTime;   // ������ ���� �ð� ����
+            lastAttackTime = GameManager.gm.totalGameTime;   // ������ ���� �ð� ����
 
             AttackCustom();
         }
     }
 
+    // ����
+    protected abstract void AttackCustom();
+
+    //==============================================
+    void Awake()
+    {
+        originScale = transform.localScale;         // 가장 처음
+        myTransform = transform;
+        center = transform.Find("Center");
+    }
+
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        target = GameManager.gm.player; // ���� ��� = �÷��̾�
-
-        // �ʱ�ȭ �ϰ� ���� �÷ο� ����
         InitEnemyStatus();
-        StartCoroutine(BattleFlow());
+
     }
 
     void FixedUpdate()
     {
-        MoveCustom();
+        if (DirectingManager.dm.onDirecting)
+        {
+            return;
+        }
+        
+        if(!isDead && canMove)
+        {
+            MoveCustom();
+        }
     }
 
 
     public abstract void MoveCustom();
 
-    public abstract void DieCustom(GameObject obj); //********************************
-
-
+    public abstract void DieCustom(); //********************************
 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && canAttack_)    // player get dmg when canAttack_
         { 
-            float dmg = damage;
+            Vector3 hitPoint = center.position;
+            
+            int dmg = damage;
 
             if (dmg != 0 )
-            {
-                EntityEffectController.eec.CreateDamageText(GameManager.gm.player, dmg);
-            
-                GameManager.gm.player.GetComponent<Player>().Hp -= (int)dmg;
+            { 
+                // Player.player.OnDamage(dmg);
+                Player.Instance.OnDamage(damage, hitPoint, strongAttack);
             }
-
-            //rigid.isKinematic = true;
         }
     }
+
+    //// 넉백
+    ///넉백 힘 무기별 차이점
+    //1. 넉백 지속시간 동안 이동불가
+    //2. velocity = 
+    // 3. or adforce impulse rigidbody 모드
+
 }

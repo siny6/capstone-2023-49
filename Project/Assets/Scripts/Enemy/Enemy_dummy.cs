@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class Enemy_dummy : Enemy
 {
-    public override void DieCustom(GameObject obj)
+    public override void DieCustom()
     {
-        DropItem();
-        Destroy(gameObject);
+        float animationLength = base.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;  // 애니메이션 길이 측정
+
+        Destroy(gameObject, animationLength);
     }
 
-    public override void InitEnemyStatus()
+    public override void InitEnemyStatusCustom()
     {
-        base.hp = 1000;            
+        base.hp = 10000000000;    
+        hpFull =10000000000;
+
         base.speed = 0;
         base.attackSpeed = 0;
+    }
+
+    public override void InitEssentialEnemyInfo()
+    {
+        id_enemy = "123";
     }
 
     public override void MoveCustom()
