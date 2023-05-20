@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_004_Normal_Dash : Enemy
+public class Enemy_014_Epic_Dash : Enemy
 {
     public float dashPower = 10f; // ���� ��
     float dashTime = 1f; // ���� ���ӽð�
@@ -13,10 +13,10 @@ public class Enemy_004_Normal_Dash : Enemy
 
     public override void InitEnemyStatusCustom()
     {
-        hpFull = 50;
-        hp = 50;
+        hpFull = 90;
+        hp = 90;
 
-       damage = 5;
+        damage = 7;
 
 
         speed = 3f;
@@ -29,9 +29,9 @@ public class Enemy_004_Normal_Dash : Enemy
 
     public override void MoveCustom()
     {
-        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
-        rb.velocity = Vector2.zero; // 물리적 속도 0으로 고정
-        rb.velocity = dirVec.normalized * speed;
+        Vector3 dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
+        Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
+        rb.MovePosition(transform.position + nextVec);
     }
     protected override void AttackCustom()
     {
@@ -60,7 +60,7 @@ public class Enemy_004_Normal_Dash : Enemy
         strongAttack = true;
         damage = 10;
 
-        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f,2f), Random.Range(-2f,2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
+        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
         rb.velocity = dirVec.normalized * dashPower;
         //Debug.Log("대시!");
         
@@ -79,6 +79,6 @@ public class Enemy_004_Normal_Dash : Enemy
 
     public override void InitEssentialEnemyInfo()
     {
-        id_enemy = "004";
+        id_enemy = "014";
     }
 }

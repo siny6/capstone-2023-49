@@ -4,13 +4,23 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public bool isBoss;     // 보스몬스터인지
+    public bool deathAnimationEnd;
+    public bool ready;
+    public float deltaScale;
+
+    public bool oneShot = false;
+    public bool shot = false;
+    
     protected float speed; // �̵��ӵ�
     
     public float hp; // ü��
 
     public float hpFull;     // ****************
 
-    protected int damage; // ���ݷ�
+    public int def;
+
+    public int damage; // ���ݷ�
 
     public bool strongAttack = false;
 
@@ -22,19 +32,44 @@ public abstract class Enemy : MonoBehaviour
     public bool canKnockBack = true;
     public float knockBack_time = 0.2f;
 
+    public float lastMoveTime;
+
     public bool canMove = true;
     public bool canAttack_ = true;      // can damage player 
     public bool canAttack       // ���� ���� ����
     {
         get
         {
-            if (attackSpeed == 0)                
+            if (DirectingManager.dm.onDirecting || !canAttack_ || attackSpeed == 0)                
             {
                 return false;
             }            
             // ���� ���� �� �����̻�(cc�� ) �Ǻ�
+            if (oneShot && shot)
+            {
+                return false;
+            }
+
+
             float attackDelay = 1 / attackSpeed;
             if (lastAttackTime + attackDelay <= GameManager.gm.totalGameTime)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+    public bool canMoving
+    {
+        get
+        {
+            if (DirectingManager.dm.onDirecting || !canMove || speed == 0)
+            {
+                return false;
+            }
+
+            float moveDelay = 1 / speed;
+            if (lastMoveTime + moveDelay <= GameManager.gm.totalGameTime)
             {
                 return true;
             }
@@ -81,7 +116,7 @@ public abstract class Enemy : MonoBehaviour
 
         target = Player.Instance.gameObject; // ���� ��� = �÷��̾�
 
-        hp = hpFull;
+        
 
         myTransform.localScale = originScale;
         myTransform.rotation = Quaternion.identity;
@@ -89,8 +124,10 @@ public abstract class Enemy : MonoBehaviour
 
         InitEnemyStatusCustom();                    // 개별 능력치 먼저 초기화
 
+        hp = hpFull;
 
         StartCoroutine(BattleFlow());
+        StartCoroutine(MoveFlow());
     }
 
     // 개별 능력치 초기화
@@ -117,11 +154,13 @@ public abstract class Enemy : MonoBehaviour
         GameManager.gm.KillCount += 1;
 
         isDead = true;
+        ready = false;
+
         dotQ.Clear();
 
         DieCustom();
         DropItem();
-        StopCoroutine( MoveAnimation());
+        // StopCoroutine( MoveAnimation());
         rb.simulated = false;
 
         StartCoroutine( DeathAnimation());
@@ -134,14 +173,17 @@ public abstract class Enemy : MonoBehaviour
     {
         // GameManager.gm.KillCount += 1;
         isDead = true;
+        ready = false;
+
         dotQ.Clear();
 
 
-        DieCustom();
+        // DieCustom();
         // DropItem();
-        StopCoroutine( MoveAnimation());
+        // StopCoroutine( MoveAnimation());
         rb.simulated = false;
 
+        
         StartCoroutine( DeathAnimation());        
     }
 
@@ -150,34 +192,48 @@ public abstract class Enemy : MonoBehaviour
     // 죽는 애니메이션 (빙글빙글 돌면서 크기가 작아짐)
     public IEnumerator DeathAnimation()
     {
-        int tickNum = 10;
-        
-
-        float angle= 36;
-        for (int i=tickNum-1;i>0;i--)
+        if (!isBoss)
         {
-            myTransform.localScale = originScale * 0.1f * i;
-            myTransform.rotation = Quaternion.Euler(0,0,angle);
+            int tickNum = 10;
 
-            angle+=36;
-            yield return new WaitForSeconds(0.05f);
+            float angle= 36;
+            for (int i=tickNum-1;i>0;i--)
+            {
+                myTransform.localScale = originScale * 0.1f * i;
+                myTransform.rotation = Quaternion.Euler(0,0,angle);
+
+                angle+=36;
+                yield return new WaitForSeconds(0.05f);
+            }
+            deathAnimationEnd = true;
         }
+        // wait until animation end 
+        yield return new WaitUntil(() => deathAnimationEnd);    
+
         EnemyPoolManager.epm.TakeToPool(this);
     }
 
     // 평상시 이동 애니메이션 (두근두근거림)
     public IEnumerator MoveAnimation()
     {
-        while(true)
+        if (!isBoss)
+        {
+            ready = true;
+        }
+        yield return new WaitUntil(()=>ready);
+
+        deltaScale = (isBoss)?0.001f: 0.005f;
+        
+        while(!isDead)
         {
             for(int i=0;i<20;i++)
             {
-                myTransform.localScale += originScale * 0.005f;
+                myTransform.localScale += originScale * deltaScale;
                 yield return null;
             }
             for(int i=0;i<20;i++)
             {
-                myTransform.localScale -= originScale * 0.005f;
+                myTransform.localScale -= originScale * deltaScale;
                 yield return null;
             }
         }
@@ -380,7 +436,13 @@ public abstract class Enemy : MonoBehaviour
     {
         // 1. 마지막 공격받은 시간에서 일정시간 지나면 스스로 힐
         // 2. 버프몬스터 근처에 있다가 힐 받음
+
+        EffectPoolManager.epm.CreateText(myTransform.position, heal.ToString(), new Color(0.2f, 0.4f, 0.1f, 1.0f));
         hp += heal;
+        if (hp > hpFull)
+        {
+            hp = hpFull;
+        }
     }
 
 
@@ -402,6 +464,19 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    public IEnumerator MoveFlow()
+    {
+        canMove = true;
+        while (!isDead)
+        {
+            Move();
+
+            float moveDelay = 0.5f;
+            yield return new WaitForSeconds(moveDelay);
+        }
+    }
+
+
     //=======================================
     // ����_����
     //=======================================
@@ -418,6 +493,19 @@ public abstract class Enemy : MonoBehaviour
 
     // ����
     protected abstract void AttackCustom();
+
+    //=============================================
+    public void Move()
+    {
+        if (canMoving)
+        {
+            lastMoveTime = GameManager.gm.totalGameTime;
+            MoveCustom();
+        }
+    }
+
+    public abstract void MoveCustom();
+
 
     //==============================================
     void Awake()
@@ -441,38 +529,58 @@ public abstract class Enemy : MonoBehaviour
             return;
         }
         
-        if(!isDead && canMove)
-        {
-            MoveCustom();
-        }
+        //if(!isDead && canMove)
+        //{
+        //    MoveCustom();
+        //}
     }
 
 
-    public abstract void MoveCustom();
 
     public abstract void DieCustom(); //********************************
 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player") && canAttack_)    // player get dmg when canAttack_
+    //    { 
+    //        Vector3 hitPoint = center.position;
+
+    //        int dmg = damage;
+
+    //        if (dmg != 0 )
+    //        { 
+    //            // Player.player.OnDamage(dmg);
+    //            Player.Instance.OnDamage(damage, hitPoint, strongAttack);
+    //        }
+    //    }
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            canMove = false;
+            Vector3 hitPoint = center.position;
+            Debug.Log("벽 닿음");
+            StartCoroutine(KnockBack(20f, hitPoint));
+            canMove = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && canAttack_)    // player get dmg when canAttack_
-        { 
+        {
             Vector3 hitPoint = center.position;
-            
+
             int dmg = damage;
 
-            if (dmg != 0 )
-            { 
-                // Player.player.OnDamage(dmg);
+            if (dmg != 0)
+            {
                 Player.Instance.OnDamage(damage, hitPoint, strongAttack);
             }
         }
     }
-
-    //// 넉백
-    ///넉백 힘 무기별 차이점
-    //1. 넉백 지속시간 동안 이동불가
-    //2. velocity = 
-    // 3. or adforce impulse rigidbody 모드
 
 }

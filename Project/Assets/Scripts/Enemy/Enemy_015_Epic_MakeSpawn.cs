@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_005_Normal_MakeSpawn : Enemy
+public class Enemy_015_Epic_MakeSpawn : Enemy
 {
     
     // �ൿƯ¡
@@ -30,9 +30,9 @@ public class Enemy_005_Normal_MakeSpawn : Enemy
 
     public override void InitEnemyStatusCustom()
     {
-        hpFull = 20;
-        hp = 20;
-        damage = 1;
+        hpFull = 40;
+        hp = 40;
+        damage = 3;
         attackSpeed = 0.1f;
         speed = 3f;
         spawnRate = 7;
@@ -41,37 +41,29 @@ public class Enemy_005_Normal_MakeSpawn : Enemy
 
     public override void InitEssentialEnemyInfo()
     {
-        id_enemy = "005";
+        id_enemy = "015";
     }
 
     public override void MoveCustom()
     {
         distance = Vector3.Distance(transform.position, base.target.transform.position);
-        //dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
-        //Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
-        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
-        rb.velocity = Vector2.zero; // 물리적 속도 0으로 고정
-
+        dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
+        Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
 
         if (distance >= 10)
         {
-            //rb.MovePosition(transform.position + nextVec);
-            rb.velocity = dirVec.normalized * speed;
+            rb.MovePosition(transform.position + nextVec);
+
         }
         else
         {
-            //rb.MovePosition(transform.position - nextVec);
-            rb.velocity = dirVec.normalized * -speed;
+            rb.MovePosition(transform.position - nextVec);
         }
     }
 
     protected override void AttackCustom()
     {
         // �÷��̾ ������ �÷��̾��� ü���� ����
-    }
-
-    private void Update()
-    {
         timer += Time.deltaTime;
         if (timer > spawnRate && isDead == false)
         {
@@ -79,12 +71,11 @@ public class Enemy_005_Normal_MakeSpawn : Enemy
             for (int i = 0; i < Random.Range(1, 3); i++)
             {
                 //GameObject enemy = GameManager.gm.pool.Get(0);
-                Enemy enemy = EnemyPoolManager.epm.SpawnEnemy("001",1,0);
+                Enemy enemy = EnemyPoolManager.epm.SpawnEnemy("001", 1, 0);
                 enemy.myTransform.position = myTransform.position;
             }
         }
     }
-
 
 
 }

@@ -34,6 +34,7 @@ public abstract class Projectile_Enemy : MonoBehaviour
 
 
     // 선택 능력치
+    public Vector3 originalScale;
     public Transform caster;
     public Transform target;             // 적의 위치 
     public Vector3 direction;            // 발사방향 
@@ -46,6 +47,13 @@ public abstract class Projectile_Enemy : MonoBehaviour
 
     public bool isAlive;
     public bool active;
+
+    //==============================================================================
+    void Awake()
+    {
+        originalScale = transform.localScale;
+    }
+
 
     public abstract void InitEssentialProjInfo();
 
@@ -71,7 +79,7 @@ public abstract class Projectile_Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         
         myTransform = transform;
-
+        
 
         damage = dmg;
         speed = spd;
@@ -84,7 +92,8 @@ public abstract class Projectile_Enemy : MonoBehaviour
         // lifeTime 이 -1인 경우는 무기가 영구지속
         SetLifeTime();
 
-        transform.localScale =  transform.localScale * scale;
+        transform.localScale =  originalScale * scale;
+        rb.simulated = true;
 	}
     public void SetUp_special(bool strongAttack)
     {
@@ -160,19 +169,38 @@ public abstract class Projectile_Enemy : MonoBehaviour
         if (lifeTime != -1)
         {
             StartCoroutine(DestroyProj(lifeTime));
-        }
+        }   
     }
 
     //============================================
     // 투사체 사라짐 : 투사체 풀에 반납 
     //============================================    
-    public void ProjDestroy()
+    public IEnumerator DestroyProj(float time)
     {
+        yield return new WaitForSeconds(time);
+
+        StartCoroutine(Shrink());
+    }
+
+    public abstract void EnemyProjDestroy_custom();
+
+    //====================
+    // 아이템 쪼그라들고 아이템 풀 반납 : 자연스러운 연출을 위함 
+    //=====================
+    IEnumerator Shrink()
+    {
+        rb.simulated = false;
+        for (int i=9;i>0;i--)
+        {
+            myTransform.localScale = originalScale * 0.1f * i;
+            yield return new WaitForSeconds(0.05f);
+        }
         EnemyProjPoolManager.eppm.TakeToPool(this);         // 풀링 - 중복 반납이 일어나면 에러발생
         EnemyProjDestroy_custom();
     }
 
-    public abstract void EnemyProjDestroy_custom();
+
+
 
     //==============================================
     // 충돌시 - 적 충돌을 감지 
@@ -186,37 +214,38 @@ public abstract class Projectile_Enemy : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("2");
+
             Vector3 hitPoint = other.ClosestPoint(myTransform.position);     // 타격지점
             
-            Player.Instance.OnDamage(damage, hitPoint, strongAttack);      
+            Player.Instance.OnDamage(damage, hitPoint, strongAttack);
+
+            OnHit();        // 히트시 효과
 
             Penetrate();
         }
 
         if (other.gameObject.CompareTag("Enemy") && id_proj.Equals("002"))
         {
-            Debug.Log("77777");
 
             float heal_hp = 4f;
             Enemy e = other.GetComponent<Enemy>();
             //EffectPoolManager.epm.CreateText();
 
-            EffectPoolManager.epm.CreateText(e.myTransform.position, heal_hp.ToString(), new Color(0.3f, 1.0f, 0.3f, 1.0f));
-            e.hp += heal_hp;
-            if (e.hp > e.hpFull)
+            if ( !DirectingManager.dm.onDirecting)
             {
-                e.hp = e.hpFull;
+                e.Healing(heal_hp );
             }
+            
+
         }
 
     }
-
-    public IEnumerator DestroyProj(float time)
+    
+    public virtual void OnHit()
     {
-        yield return new WaitForSeconds(time);
-        EnemyProjPoolManager.eppm.TakeToPool(this);
+
     }
+
 
 
 

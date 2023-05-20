@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_002_Normal_Ranger : Enemy
+public class Enemy_012_Epic_Ranger : Enemy
 {
     public Transform direction;
     Vector2 movement;
@@ -15,9 +15,9 @@ public class Enemy_002_Normal_Ranger : Enemy
 
     public override void InitEnemyStatusCustom()
     {
-        hpFull = 15;
-        damage = 3;
-        hp = 15;
+        hpFull = 40;
+        damage = 6;
+        hp = 40;
         speed = 2;
         attackSpeed = 0.5f;
 
@@ -45,9 +45,6 @@ public class Enemy_002_Normal_Ranger : Enemy
 
     public override void DieCustom()
     {
-        // gameObject.SetActive(false);
-        // GetComponent<Collider2D>().enabled = true;
-        // hp = hpFull;
     }
 
     public override void MoveCustom()
@@ -58,7 +55,7 @@ public class Enemy_002_Normal_Ranger : Enemy
         //Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
         Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
         rb.velocity = Vector2.zero; // 물리적 속도 0으로 고정
-
+        
 
         if (distance >= 10)
         {
@@ -70,11 +67,12 @@ public class Enemy_002_Normal_Ranger : Enemy
             //rb.MovePosition(transform.position - nextVec);
             rb.velocity = dirVec.normalized * -speed;
         }
+        
 
     }
 
     public override void InitEssentialEnemyInfo()
     {
-        id_enemy = "002";
+        id_enemy = "012";
     }
 }

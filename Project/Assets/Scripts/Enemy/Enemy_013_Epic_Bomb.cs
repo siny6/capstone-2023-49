@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_003_Normal_Bomb : Enemy
+public class Enemy_013_Epic_Bomb : Enemy
 {
     float distance;
     float radius = 5; // 폭발 데미지 범위
@@ -14,8 +14,8 @@ public class Enemy_003_Normal_Bomb : Enemy
 
     public override void InitEnemyStatusCustom()
     {
-        hpFull = 25;
-        hp = 25;
+        hpFull = 50;
+        hp = 50;
         damage = 2;
         attackSpeed = 0.1f; // *****************************************************
         speed = 1;
@@ -34,11 +34,10 @@ public class Enemy_003_Normal_Bomb : Enemy
     }
     public override void MoveCustom()
     {
-        //dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
-        //Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
-        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
-        rb.velocity = Vector2.zero; // 물리적 속도 0으로 고정
-        rb.velocity = dirVec.normalized * speed;
+        Vector3 dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
+        Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
+        rb.MovePosition(transform.position + nextVec);
+        rb.velocity = Vector2.zero; // ������ �ӵ� 0���� ����
     }
 
 
@@ -73,9 +72,9 @@ public class Enemy_003_Normal_Bomb : Enemy
         for (int i = 0; i < 3; i++)
         {
             rend.color = new Color(1, 0, 0);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             rend.color = new Color(0, 1, 0);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
         }
 
 
@@ -110,6 +109,6 @@ public class Enemy_003_Normal_Bomb : Enemy
 
     public override void InitEssentialEnemyInfo()
     {
-        id_enemy = "003";
+        id_enemy = "013";
     }
 }

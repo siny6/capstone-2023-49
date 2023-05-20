@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_006_Normal_Healing : Enemy
+public class Enemy_016_Epic_Healing : Enemy
 {
     public GameObject heal_zone; // ��ƼŬ�̳� ������ �� �����ֱ�
     public float radius = 5; // heal_zone ������
@@ -12,9 +12,9 @@ public class Enemy_006_Normal_Healing : Enemy
 
     public override void InitEnemyStatusCustom()
     {
-        hpFull = 20;
-        hp = 20;
-        damage = 1;
+        hpFull = 30;
+        hp = 30;
+        damage = 3;
         attackSpeed = 0.1f;
         speed = 3f;
         heal_hp = 3;
@@ -27,21 +27,17 @@ public class Enemy_006_Normal_Healing : Enemy
         // �������� : �÷��̾ ���������� �ֺ� ���� ����� �Ϲݸ��� or ���� ���ִ� �Ϲ� ���� ���󰡼� �ӹ�����
 
         distance = Vector3.Distance(transform.position, base.target.transform.position);
-        //dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
-        //Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
-        Vector3 dirVec = base.target.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f)) - transform.position;  // ���� = Ÿ�� ��ġ - �� ��ġ
-        rb.velocity = Vector2.zero; // 물리적 속도 0으로 고정
-
+        dirVec = base.target.transform.position - transform.position; // ���� = Ÿ�� ��ġ - �� ��ġ
+        Vector3 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime; // ���� ��ġ
 
         if (distance >= 10)
         {
-            //rb.MovePosition(transform.position + nextVec);
-            rb.velocity = dirVec.normalized * speed;
+            rb.MovePosition(transform.position + nextVec);
+
         }
         else
         {
-            //rb.MovePosition(transform.position - nextVec);
-            rb.velocity = dirVec.normalized * -speed;
+            rb.MovePosition(transform.position - nextVec);
         }
     }
 
@@ -82,10 +78,12 @@ public class Enemy_006_Normal_Healing : Enemy
         proj.myTransform.position = myTransform.position;
         proj.caster = myTransform;
         proj.Action();
+
+        // enemy 회복이 아니라 player 공격 장판
     }
 
     public override void InitEssentialEnemyInfo()
     {
-        id_enemy = "006";
+        id_enemy = "016";
     }
 }
