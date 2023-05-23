@@ -53,6 +53,6 @@ Absorber is a Games Like Vampire Survivors where the player fights against endle
  <img src="./pagesource/chomin.jpg"  width="100" height="100"/>  |<img src="./pagesource/choi.jpg"  width="100" height="100"/> | <img src="./pagesource/han.jpg"  width="100" height="100"/> |
  Tel. 010-3478-3315 <br> E-mail. tjdals9709@naver.com| Tel. 010-7210-2326 <br> E-mail. siny0626@gmail.com| Tel. 010-9347-2444 <br> E-mail. hantawon@naver.com|
  
- ## 팀원 역활
+ ## 팀원 역할
  
  (추가예정)
