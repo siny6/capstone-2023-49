@@ -12,7 +12,7 @@ https://kookmin-sw.github.io/capstone-2023-49/
  - 사용하는 언어 : C#(Unitiy)
 
 
-  Absorber는 무한히 다가오는 몬스터들에 맞서 싸워 탑의 정상을 향해가는 뱀서라이크류 게임입니다. 기존 뱀서라이크 류 게임에 없던 높은 랜덤성을 부여해 일회성 플레이와 다회성 플레이에 의미를 부여합니다. 
+  Absorber는 무한히 다가오는 몬스터들에 맞서 싸워 탑의 정상을 향해가는 뱀서라이크류 게임입니다. 기존 뱀서라이크 류 게임에 없던 높은 랜덤성을 부여해 일회성 플레이와 다회성 플레이에 의미를 부여합니다.
 
 
 ## 2. Abstract
@@ -33,13 +33,12 @@ Absorber is a Games Like Vampire Survivors where the player fights against endle
 <img src="./pagesource/1.jpg"  width="300" height="300"/> <img src="./pagesource/2.jpg"  width="300" height="300"/>
 <img src="./pagesource/3.jpg"  width="300" height="300"/>  <img src="./pagesource/4.jpg"  width="300" height="300"/>
 <img src="./pagesource/6.jpg"  width="300" height="300"/> <img src="./pagesource/7.jpg"  width="300" height="300"/>
-(이미지 4장과 영상링크)
-(게임 튜토리얼 이미지 있으면 좋을 듯)
+
 
 ----
 ## 설치 방법
 
-추후 업데이트
+Git의 Main Branch를 알집으로 다운받은 뒤, 압축을 해제하고 Absorber.exe를 실행
 
 
 
