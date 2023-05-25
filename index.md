@@ -24,24 +24,24 @@ Absorber is a Games Like Vampire Survivors where the player fights against endle
 
 
 ----
-## 게임 이미지
+## 3. 게임 이미지
 
 <img src="./pagesource/1.jpg"  width="300" height="200"/> <img src="./pagesource/2.jpg"  width="300" height="200"/>
 <img src="./pagesource/3.jpg"  width="300" height="200"/>  <img src="./pagesource/4.jpg"  width="300" height="200"/>
 <img src="./pagesource/6.jpg"  width="300" height="200"/> <img src="./pagesource/7.jpg"  width="300" height="200"/>
 
 ----
-## 게임 시연 영상
+## 4. 게임 시연 영상
 [![sample](http://img.youtube.com/vi/h8oYjLvz88o/0.jpg)](https://www.youtube.com/watch?v=h8oYjLvz88o&ab_channel=%EC%8B%A0%ED%9A%A8%EC%B0%BD)
 ----
-## 설치 방법
+## 5. 설치 방법
 
 Git의 Main Branch를 알집으로 다운받은 뒤, 압축을 해제하고 Absorber.exe를 실행
 
 
 
 
-## 팀원 소개
+## 6. 팀원 소개
 
 팀장 김중현(****3199)
 
