@@ -32,7 +32,7 @@ Absorber is a Games Like Vampire Survivors where the player fights against endle
 
 <img src="./pagesource/1.jpg"  width="300" height="300"/> <img src="./pagesource/2.jpg"  width="300" height="300"/>
 <img src="./pagesource/3.jpg"  width="300" height="300"/>  <img src="./pagesource/4.jpg"  width="300" height="300"/>
-<img src="./pagesource/5.jpg"  width="300" height="300"/> <img src="./pagesource/6.jpg"  width="300" height="300"/>
+<img src="./pagesource/6.jpg"  width="300" height="300"/> <img src="./pagesource/7.jpg"  width="300" height="300"/>
 (이미지 4장과 영상링크)
 (게임 튜토리얼 이미지 있으면 좋을 듯)
 
