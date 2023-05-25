@@ -1,7 +1,3 @@
-
-# Absorber
-https://kookmin-sw.github.io/capstone-2023-49/
-
 <img src="./pagesource/main.png"  width="800" height="400"/>
 
 ## 1. 프로젝트 소개
