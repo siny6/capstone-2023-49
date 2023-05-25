@@ -22,9 +22,13 @@
 ## 2. abstract
 
 Title: Absorber
+
 Genre: Bamsurike (Ryu that defeats enemies who approach infinitely)
+
 Language used: C# (Unitiy)
+
 How to play the game: Stage (General -> Boss)
+
 Characteristics
 - Concept: A player is an Absorber who absorbs the ability when he kills a monster.
 - Enemies on the way: various monsters summoned attack the player as the stage progresses. Players need to be sophisticated in control because they are subjected to multiple monster attacks (rush, bullet, explosion, etc.
