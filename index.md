@@ -4,22 +4,22 @@
 
  - 제목 : Absorber
  - 장르 : 뱀서라이크(무한히 다가오는 적들을 물리치는 류)
- - 특징 : 높은 랜덤성, 강한 보스
+ - 특징 : 강한 보스
  - 사용하는 언어 : C#(Unitiy)
 
 
-  Absorber는 무한히 다가오는 몬스터들에 맞서 싸워 탑의 정상을 향해가는 뱀서라이크류 게임입니다. 기존 뱀서라이크 류 게임에 없던 높은 랜덤성을 부여해 일회성 플레이와 다회성 플레이에 의미를 부여합니다. 충분한 준비가 되지 않는다면 강한 보스 앞에서 게임 종료를 당할 것입니다.
+  Absorber는 무한히 다가오는 몬스터들에 맞서 싸워 탑의 정상을 향해가는 뱀서라이크류 게임입니다. 기존 뱀서라이크 류 게임에 없던 강한 보스전을 통해 일회성 플레이와 다회성 플레이에 의미를 부여합니다. 충분한 준비가 되지 않는다면 강한 보스 앞에서 당신은 게임 종료를 당할 것입니다.
 
 
 ## 2. Abstract
 
 -   Title: Absorber
 -   Genre:  Games Like Vampire Survivors(a type of game where the player defeats endlessly approaching enemies)
--   Features: High randomness, powerful Boss
+-   Features: powerful Boss
 -   Language used: C# (Unity)
 
 <br>
-Absorber is a Games Like Vampire Survivors where the player fights against endless waves of monsters to reach the top of a tower. It features high randomness that give meaning to both one-time and repeated plays. If you're not prepared enough, you'll be game over in front of a powerful boss.
+Absorber is a Games Like Vampire Survivors where the player fights against endless waves of monsters to reach the top of a tower. It gives meaning to one-time and multiple-time plays through strong boss matches that were not in existing Bamsurvlike games. If you're not prepared enough, you'll be game over in front of a powerful boss.
  
 
 
