@@ -40,7 +40,7 @@ Characteristics
 
 <img src="./pagesource/1.jpg"  width="300" height="200"/> <img src="./pagesource/2.png"  width="300" height="200"/>
 <img src="./pagesource/3.png"  width="300" height="200"/>  <img src="./pagesource/4.png"  width="300" height="200"/>
-<img src="./pagesource/6.png"  width="300" height="200"/> <img src="./pagesource/7.png"  width="300" height="200"/>
+<img src="./pagesource/5.jpg"  width="300" height="200"/> <img src="./pagesource/7.png"  width="300" height="200"/>
 
 ----
 ## 4. 게임 시연 영상
