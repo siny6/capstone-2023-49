@@ -38,9 +38,9 @@ Characteristics
 ----
 ## 3. 게임 이미지
 
-<img src="./pagesource/1.jpg"  width="300" height="200"/> <img src="./pagesource/2.jpg"  width="300" height="200"/>
-<img src="./pagesource/3.jpg"  width="300" height="200"/>  <img src="./pagesource/4.jpg"  width="300" height="200"/>
-<img src="./pagesource/6.jpg"  width="300" height="200"/> <img src="./pagesource/7.jpg"  width="300" height="200"/>
+<img src="./pagesource/1.jpg"  width="300" height="200"/> <img src="./pagesource/2.png"  width="300" height="200"/>
+<img src="./pagesource/3.png"  width="300" height="200"/>  <img src="./pagesource/4.png"  width="300" height="200"/>
+<img src="./pagesource/6.png"  width="300" height="200"/> <img src="./pagesource/7.png"  width="300" height="200"/>
 
 ----
 ## 4. 게임 시연 영상
