@@ -2,6 +2,8 @@
 # Absorber
 https://kookmin-sw.github.io/capstone-2023-49/
 
+<img src="./pagesource/main.png"  width="800" height="400"/>
+
 ## 1. 프로젝트 소개
 
  - 제목 : Absorber
@@ -28,7 +30,9 @@ Absorber is a Games Like Vampire Survivors where the player fights against endle
 ----
 ## 게임 이미지, 영상
 
-<img src="./pagesource/player.png"  width="200" height="200"/>
+<img src="./pagesource/1.jpg"  width="300" height="300"/> <img src="./pagesource/2.jpg"  width="300" height="300"/>
+<img src="./pagesource/3.jpg"  width="300" height="300"/>  <img src="./pagesource/4.jpg"  width="300" height="300"/>
+<img src="./pagesource/5.jpg"  width="300" height="300"/> <img src="./pagesource/6.jpg"  width="300" height="300"/>
 (이미지 4장과 영상링크)
 (게임 튜토리얼 이미지 있으면 좋을 듯)
 
